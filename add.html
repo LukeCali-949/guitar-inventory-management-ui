@@ -100,7 +100,9 @@
     </form>
 
     <script>
-      function addTheGuitar() {
+      let host = "http://localhost:8000/";
+
+      async function addTheGuitar() {
         var guitar = {
           serialNumber: document.querySelector(".serialNumber").value,
           price: document.querySelector(".price").value,
@@ -110,7 +112,54 @@
           backWood: document.querySelector(".backWood").value,
           topWood: document.querySelector(".topWood").value,
         };
-        alert("Guitar added: " + JSON.stringify(guitar));
+
+        var fieldNames = {
+          serialNumber: "Serial number",
+          price: "Price",
+          builder: "Builder",
+          model: "Model",
+          type: "Type",
+          backWood: "Back wood",
+          topWood: "Top wood",
+        };
+
+        for (let key in guitar) {
+          if (guitar[key] === "") {
+            alert(`Please enter a value for ${fieldNames[key]}.`);
+            return;
+          }
+        }
+
+        try {
+          let response = await fetch(host + "addGuitar", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(guitar),
+          });
+
+          if (response.ok) {
+            let data = await response.json();
+
+            if (data.status === "success") {
+              alert("The guitar was added to the system");
+            } else {
+              alert(
+                "Something went wrong. Please try again or contact the customer support team."
+              );
+            }
+          } else {
+            throw new Error("Network ResPonse error");
+          }
+        } catch (error) {
+          console.error(
+            error
+          );
+          alert(
+            "Something went wrong. Please try again or contact the customer support team."
+          );
+        }
       }
     </script>
   </body>
