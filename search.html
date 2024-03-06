@@ -121,15 +121,40 @@
         let type = document.getElementById("type").value;
         let backWood = document.getElementById("backWood").value;
         let topWood = document.getElementById("topWood").value;
+
+        if(!builder){
+          alert("You must put a value for builder")
+          return;
+        }
+
+        if(!type){
+          alert("You must put a value for type")
+          return;
+        }
+
+        
+
+        if(!backWood){
+          alert("You must put a value for backWood")
+          return;
+        }
+
+        if(!topWood){
+          alert("You must put a value for topWood")
+          return;
+        }
     
         let query = `builder=${builder}&model=${model}&type=${type}&backWood=${backWood}&topWood=${topWood}`;
-        let url = `http://localhost:8000/searchGuitars?${query}`;
+        let url = `https://c322-spring2024-homework2-latest-6n96.onrender.com/search?${query}`;
+        console.log(url);
     
         try {
+          
           let response = await fetch(url);
     
     
           let guitars = await response.json(); 
+          console.log(guitars);
     
           let table = document.getElementById("searchResult");
           table.innerHTML = ""; 
