@@ -100,7 +100,7 @@
     </form>
 
     <script>
-      let host = "http://localhost:8000/";
+      let host = "https://c322-spring2024-homework2-latest-6n96.onrender.com/";
 
       async function addTheGuitar() {
         var guitar = {
@@ -131,7 +131,7 @@
         }
 
         try {
-          let response = await fetch(host + "addGuitar", {
+          let response = await fetch(host + "add", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -141,9 +141,10 @@
 
           if (response.ok) {
             let data = await response.json();
+            console.log(data);
 
-            if (data.status === "success") {
-              alert("The guitar was added to the system");
+            if (data) {
+              alert("The guitar was added to the system!");
             } else {
               alert(
                 "Something went wrong. Please try again or contact the customer support team."
